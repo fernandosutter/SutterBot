@@ -3,6 +3,7 @@ const client = new Discord.Client();
 require('dotenv').config();
 
 client.on('ready', () => {
+	client.user.setActivity(`Serving ${client.guilds.size} servers`);
 	console.log('Connected as ' + client.user.tag);
 	// List servers the bot is connected to
 	console.log('Servers:');
@@ -14,25 +15,26 @@ client.on('ready', () => {
 	client.channels.forEach(channel => {
 		console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
 	});
-	var generalChannel = client.channels.get('539101792697450517'); // Replace with known channel ID
-	generalChannel.send('Hello, world!');
 });
 
 client.on('message', receivedMessage => {
-	// Prevent bot from responding to its own messages
 	if (receivedMessage.author == client.user) {
 		return;
 	}
 
 	// Check if the bot's user was tagged in the message
-	if (receivedMessage.content.includes(client.user.toString())) {
-		// Send acknowledgement message
-		receivedMessage.channel.send(
-			'Message received from ' +
-				receivedMessage.author.toString() +
-				': ' +
-				receivedMessage.content
-		);
+	if (receivedMessage.content.includes('!all')) {
+		client.channels.forEach(channel => {
+			if (channel.type == 'text') {
+				receiverChannel = client.channels.get(channel.id);
+				receiverChannel.send(
+					'Message sent from ' +
+						receivedMessage.author.toString() +
+						': ' +
+						receivedMessage.content
+				);
+			}
+		});
 	}
 });
 
