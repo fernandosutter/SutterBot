@@ -31,7 +31,7 @@ client.on('message', receivedMessage => {
 					'Message sent from ' +
 						receivedMessage.author.toString() +
 						': ' +
-						receivedMessage.content
+						receivedMessage.content.replace('!all', '')
 				);
 			}
 		});
