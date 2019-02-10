@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const allCommand = require('./commands/all');
 require('dotenv').config();
 
 client.on('ready', () => {
@@ -22,23 +23,8 @@ client.on('message', receivedMessage => {
 		return;
 	}
 
-	// Check if the bot's user was tagged in the message
-	if (receivedMessage.content.includes('!all')) {
-		client.channels.forEach(channel => {
-			if (
-				channel.type == 'text' &&
-				channel.id !== receivedMessage.channel.id
-			) {
-				let receiverChannel = client.channels.get(channel.id);
-				receiverChannel.send(
-					'Message sent from ' +
-						receivedMessage.author.toString() +
-						': ' +
-						receivedMessage.content.replace('!all', '')
-				);
-			}
-		});
-	}
+	// Command that send a massage to all text channels
+	allCommand.allCommand(receivedMessage, client);
 });
 
 client.login(process.env.BOT_SECRET_TOKEN);
