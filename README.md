@@ -11,3 +11,11 @@ With this command, you can send a message to all channels at once.
 #### Example
 
 `!all textgoeshere`
+
+### !help
+
+This command redirects you to this page, where you can see all the available commands.
+
+#### Example
+
+`!help`

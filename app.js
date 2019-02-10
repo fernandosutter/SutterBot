@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const allCommand = require('./commands/all');
+const helpCommand = require('./commands/help');
 require('dotenv').config();
 
 client.on('ready', () => {
@@ -25,6 +26,9 @@ client.on('message', receivedMessage => {
 
 	// Command that send a massage to all text channels
 	allCommand.allCommand(receivedMessage, client);
+
+	// Help Command
+	helpCommand.helpCommand(receivedMessage, client);
 });
 
 client.login(process.env.BOT_SECRET_TOKEN);
